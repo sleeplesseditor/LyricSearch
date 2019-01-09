@@ -10,10 +10,16 @@ export class Provider extends Component {
         heading: 'Top 10 Tracks'
     };
     
+    //Country code and track numbers can be changed here
     componentDidMount(){
         axios
-            .get(`https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=5&country=us&f_has_lyrics=1&apikey=${musicMatch}`)
-            .then(res => console.log(res.data))
+            .get(`https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=10&country=us&f_has_lyrics=1&apikey=${musicMatch}`)
+            .then(res => {
+                // console.log(res.data);
+                this.setState({
+                    track_list: res.data.message.body.track_list
+                });
+            })
             .catch(err => console.log(err));
     }
     
