@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 const Context = React.createContext();
+const musicMatch = require('./config/keys').MM_API;
 
 export class Provider extends Component {
     state = {
-        track_list: [
-            { track: { track_name: 'ABC'} },
-            { track: { track_name: '123'} }
-        ],
+        track_list: [],
         heading: 'Top 10 Tracks'
     };
+    
+    componentDidMount(){
+        axios
+            .get(`https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?chart_name=top&page=1&page_size=5&country=us&f_has_lyrics=1&apikey=${musicMatch}`)
+            .then(res => console.log(res.data))
+            .catch(err => console.log(err));
+    }
+    
 
     render() {
         return (
